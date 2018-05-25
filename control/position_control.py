@@ -18,6 +18,8 @@ def position_control(robot):
 	error_angle = calculateErrorAngle(relative_target,orientation)
 	error_magnitude = calculateDistance(relative_target)
 
+	print error_angle
+
 	u = robot.k_u * error_magnitude * orientation * (cos(error_angle))
 	w = robot.k_w * error_angle
 

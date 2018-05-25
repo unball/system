@@ -14,7 +14,15 @@ def controller(robot):
 	elif robot.control == control_options.curve:
 		u,w = curve_control(robot)
 
+	elif robot.control == control_options.spinLeft:
+		u = 0
+		w = 15
+
+	elif robot.control == control_options.spinRight:
+		u = 0
+		w = -15
+
 	else:
 		u,w = position_control(robot)
 		
-		return u, w
+	return u, w
