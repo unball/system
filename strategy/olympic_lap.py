@@ -1,14 +1,8 @@
 from control_options import *
-import time
 
-start = []
+def olympic_lap(robot):
 
-def test(robot):
-	start.append(time.time())
-	if len(start)>1:
-		del start[1]
-
-	points = 0.4
+	points = 0.3
 
 	if(robot.dy == points and robot.dx == points):
 		next_target_x = -points
@@ -28,10 +22,9 @@ def test(robot):
 		next_target_x = points
 		next_target_y = points
 	
-	if(time.time() - start[0])>4:
+	if(abs(robot.y - robot.dy) <=0.1 and abs(robot.x - robot.dx) <=0.1):
 		x = next_target_x
 		y = next_target_y
-		start[0] = time.time()
 
 	else:
 		x = robot.dx
