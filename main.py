@@ -74,8 +74,8 @@ def receive_joystick(data):
 	for i in range(number_of_robots):
 		if joystick[i]:
 			speeds.linear_vel[i], speeds.angular_vel[i] = joystick_control(data)
-			robot.u, robot.w = speeds.linear_vel[i], speeds.angular_vel[i]
-			motors.MotorA[i], motors.MotorB[i] = speeds2motors(robot)
+			robot[i].u, robot[i].w = speeds.linear_vel[i], speeds.angular_vel[i]
+			motors.MotorA[i], motors.MotorB[i] = speeds2motors(robot[i])
 
 def main():
 	print 'planning node started'
