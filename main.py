@@ -16,7 +16,7 @@ import time
 
 number_of_robots = 3
 robot = [Robot(), Robot(), Robot()]
-k_p = [[3,4],[3,4],[1,1]]
+k_p = [[3,3],[3,4],[3,4]]
 k_i = [[0,0],[0,0],[0,0]]
 k_d = [[0.1,0],[0,0],[0,0]]
 speeds = robots_speeds_msg()
@@ -51,7 +51,6 @@ def system(data):
 	ball.y = data.ball_y
 	for i in range(3):
 		if not(joystick[i]):
-			print paused
 			robot[i].id = i
 			robot[i].x = data.x[i]
 			robot[i].y = data.y[i]
@@ -89,7 +88,7 @@ def main():
 	if any(joystick):
 		rospy.Subscriber('joy',Joy,receive_joystick)
 	rospy.Subscriber('keyboard_topic',String,keyboardReceiver)
-	rate = rospy.Rate(30)	
+	rate = rospy.Rate(30)
 
 	try:
 		while not rospy.is_shutdown():
