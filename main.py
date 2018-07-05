@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-
 from Robot import Robot
 from Ball import Ball
+from std_msgs.msg import String
 import rospy
 from strategy.strategy import *
 from sensor_msgs.msg import Joy
@@ -16,16 +16,15 @@ import time
 
 number_of_robots = 3
 robot = [Robot(), Robot(), Robot()]
-k_p = [[0.1,1],[1,1],[0.2,1]]
-k_i = [[0.1,0],[0,0],[0,0]]
+k_p = [[3,4],[3,4],[1,1]]
+k_i = [[0,0],[0,0],[0,0]]
 k_d = [[0.1,0],[0,0],[0,0]]
 speeds = robots_speeds_msg()
 motors = comm_msg()
-strategies = ["go_to_ball","go_to_ball","go_to_ball"]
-joystick = [True, False, False]
-#cont = 0
-#total_time = 0
-#myfle = open("time.txt",'a+')
+strategies = ["goalkeeper","go_to_ball","go_to_ball"]
+joystick = [False, False, False]
+paused = False
+ball = Ball()
 
 def writeInFile(robot):
 	files = ['robot1.txt','robot2.txt','robot3.txt']
@@ -33,15 +32,26 @@ def writeInFile(robot):
 		myfile = open(files[i], 'a+')
 		myfile.write('%f,%f,%f,%f,%f\n'%(robot[i].dx,robot[i].dy,robot[i].dth,robot[i].u,robot[i].w))
 
+def keyboardReceiver(data):
+	global paused
+	data.data = data.data.lower()
+	if data.data == "r":
+		ball.side = 1
+	elif data.data == "l":
+		ball.side = -1
+
+	if data.data == "p":
+		paused = True
+	if data.data == "g":
+		paused = False
+
 def system(data):
-#	global total_time
-#	global cont
 	start_time = time.time()
-	ball = Ball()
 	ball.x = data.ball_x
 	ball.y = data.ball_y
 	for i in range(3):
 		if not(joystick[i]):
+			print paused
 			robot[i].id = i
 			robot[i].x = data.x[i]
 			robot[i].y = data.y[i]
@@ -58,17 +68,8 @@ def system(data):
 			motors.MotorA[i], motors.MotorB[i] = speeds2motors(robot[i])
 			speeds.linear_vel[i], speeds.angular_vel[i] = controller(robot[i])
 
+
 #	writeInFile(robot)
-#	cont +=1
-#	processing_time = time.time() - start_time
-#	total_time = total_time + processing_time
-#	myfle.write('%f\n'%(processing_time))
-#	print("Processing time: %f"%(processing_time))
-#	print("Average processing time: %f"%(total_time/cont))
-
-
-
-
 
 def receive_joystick(data):
 	for i in range(number_of_robots):
@@ -87,10 +88,16 @@ def main():
 	rospy.Subscriber('pixel_to_metric_conversion_topic', VisionMessage, system)
 	if any(joystick):
 		rospy.Subscriber('joy',Joy,receive_joystick)
-
+	rospy.Subscriber('keyboard_topic',String,keyboardReceiver)
 	rate = rospy.Rate(30)	
+
 	try:
 		while not rospy.is_shutdown():
+			if paused:
+				for i in range(3):
+					speeds.linear_vel[i] = 0
+					speeds.angular_vel[i] = 0
+
 			pub1.publish(speeds)
 			pub2.publish(motors)
 			rate.sleep()

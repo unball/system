@@ -6,14 +6,14 @@ import time
 
 global t
 t = 0
-def kicker(robot,ball):
+def defender(robot,ball):
 	distance2ball = sqrt((robot.x-ball.x)**2 + (robot.y - ball.y)**2)
 	x = ball.x
 	y = ball.y
 	th = 0
 	lookingAtGoal(robot,ball)
 	if distance2ball < 0.075:
-		if (lookingAtGoal(robot,ball) and rightSide(robot,ball)):
+		if not(lookingAtWrongGoal(robot,ball) and not(rightSide(robot,ball))):
 			control = control_options.fullSteam
 
 		elif (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
@@ -35,7 +35,7 @@ def rightSide(robot,ball):
 def ballUpRobot(robot,ball):
 	return (robot.y>ball.y)
 
-def lookingAtGoal(robot,ball):
+def lookingAtWrongGoal(robot,ball):
 	y_wall = (0.65*ball.side)*tan(robot.th) - tan(robot.x)*robot.x + robot.y
 
 	return (abs(y_wall)<0.2)
