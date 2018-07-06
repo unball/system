@@ -11,18 +11,24 @@ def defender(robot,ball):
 	x = ball.x
 	y = ball.y
 	th = 0
-	lookingAtGoal(robot,ball)
 	if distance2ball < 0.075:
-		if not(lookingAtWrongGoal(robot,ball) and not(rightSide(robot,ball))):
-			control = control_options.fullSteam
-
-		elif (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
+		if (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
 			control = control_options.spinCCW
 		else:
 			control = control_options.spinCW
 	else:
 		control = control_options.position
 
+	if ball.side == 1:
+		if x < -ball.side*0.55:
+			x = -ball.side*0.55
+		elif x > ball.side*0.3:
+			x = ball.side*0.3
+	else:
+		if x > -ball.side*0.55:
+			x = -ball.side*0.55
+		elif x < ball.side*0.3:
+			x = ball.side*0.3
 
 	return control, x, y, th
 

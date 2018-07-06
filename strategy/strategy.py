@@ -7,6 +7,8 @@ from olympic_lap import *
 from goalkeeper import *
 from test import *
 from updated_gtb import *
+from defender import *
+from defender_2 import *
 
 def start(robot, ball):
 	if robot.strategy == "kicker":
@@ -19,6 +21,10 @@ def start(robot, ball):
 		control, x, y, th = goalkeeper(robot,ball)
 	elif robot.strategy == 'updated_gtb':
 		control, x, y, th = updated_gtb(robot,ball)
+	elif robot.strategy == 'defender2':
+		control, x, y, th = defender2(robot,ball)
+	elif robot.strategy == 'defender':
+		control, x, y, th = defender(robot,ball)
 	else:
 		control,x,y,th = go_to_ball(robot,ball)
 
