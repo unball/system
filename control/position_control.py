@@ -38,6 +38,11 @@ def position_control(robot):
 	else:
 		u = (robot.kp_u * error_magnitude+ robot.ki_u*integral_distance[robot.id])*orientation*cos(error_angle)
 
+	if error_magnitude < 0.07:
+		u = 0
+		w = 0
+
+
 
 	w = robot.kp_w * error_angle + robot.ki_w*integral_angle[robot.id]
 

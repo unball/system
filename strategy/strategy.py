@@ -6,6 +6,7 @@ from kicker import *
 from olympic_lap import *
 from goalkeeper import *
 from test import *
+from updated_gtb import *
 
 def start(robot, ball):
 	if robot.strategy == "kicker":
@@ -16,6 +17,8 @@ def start(robot, ball):
 		control,x,y,th = test(robot)
 	elif robot.strategy == "goalkeeper":
 		control, x, y, th = goalkeeper(robot,ball)
+	elif robot.strategy == 'updated_gtb':
+		control, x, y, th = updated_gtb(robot,ball)
 	else:
 		control,x,y,th = go_to_ball(robot,ball)
 

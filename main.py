@@ -21,7 +21,7 @@ k_i = [[0,0],[0,0],[0,0]]
 k_d = [[0.1,0],[0,0],[0,0]]
 speeds = robots_speeds_msg()
 motors = comm_msg()
-strategies = ["goalkeeper","go_to_ball","go_to_ball"]
+strategies = ["goalkeeper","updated_gtb","go_to_ball"]
 joystick = [False, False, False]
 paused = False
 ball = Ball()
@@ -51,6 +51,7 @@ def system(data):
 	ball.y = data.ball_y
 	for i in range(3):
 		if not(joystick[i]):
+			print paused
 			robot[i].id = i
 			robot[i].x = data.x[i]
 			robot[i].y = data.y[i]
@@ -96,6 +97,8 @@ def main():
 				for i in range(3):
 					speeds.linear_vel[i] = 0
 					speeds.angular_vel[i] = 0
+					motors.MotorA[i] = 0
+					motors.MotorB[i] = 0
 
 			pub1.publish(speeds)
 			pub2.publish(motors)
