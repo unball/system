@@ -22,13 +22,13 @@ def defender(robot,ball):
 	if ball.side == 1:
 		if x < -ball.side*0.55:
 			x = -ball.side*0.55
-		elif x > ball.side*0.3:
-			x = ball.side*0.3
+		elif x > ball.side*0.05:
+			x = ball.side*0.05
 	else:
 		if x > -ball.side*0.55:
 			x = -ball.side*0.55
-		elif x < ball.side*0.3:
-			x = ball.side*0.3
+		elif x < ball.side*0.05:
+			x = ball.side*0.05
 
 	return control, x, y, th
 
