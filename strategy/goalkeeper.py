@@ -41,13 +41,16 @@ def goalkeeper(robot,ball):
 	control = control_options.position
 
 	if distance2ball <= 0.08:
-		if ball.side == 1:
-			control = control_options.spinCW
-		else:
+		if (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
 			control = control_options.spinCCW
+		else:
+			control = control_options.spinCW
 
 	th = 0
 	return control, x, y, th
+
+def ballUpRobot(robot,ball):
+	return (robot.y>ball.y)
 
 def walls_estimation(vel_x, vel_y, ball):
     speed_vector = planar.Vec2(vel_x,vel_y)
