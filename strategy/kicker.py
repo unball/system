@@ -14,7 +14,8 @@ def kicker(robot,ball):
     lookingAtGoal(robot,ball)
     if distance2ball < 0.075:
         if (lookingAtGoal(robot,ball) and rightSide(robot,ball)):
-            control = control_options.fullSteam
+            x = ball.side*0.65
+            y = 0
 
         elif (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
             control = control_options.spinCCW
