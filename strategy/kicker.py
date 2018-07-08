@@ -12,10 +12,11 @@ def kicker(robot,ball):
     y = ball.y
     th = 0
     lookingAtGoal(robot,ball)
-    if distance2ball < 0.075:
+    if distance2ball < 0.08:
         if (lookingAtGoal(robot,ball) and rightSide(robot,ball)):
             x = ball.side*0.65
             y = 0
+            control = control_options.position
 
         elif (ball.side == -1 and ballUpRobot(ball,robot)) or (ball.side == 1 and not(ballUpRobot(ball,robot))):
             control = control_options.spinCCW
@@ -25,11 +26,11 @@ def kicker(robot,ball):
         control = control_options.position
 
     if ball.side == 1:
-        if x < -ball.side*0.55:
-            x = -ball.side*0.55
+        if x < -ball.side*0.45:
+            x = -ball.side*0.45
     else:
-        if x > -ball.side*0.55:
-            x = -ball.side*0.55
+        if x > -ball.side*0.45:
+            x = -ball.side*0.45
 
 
     return control, x, y, th
@@ -50,6 +51,3 @@ def lookingAtGoal(robot,ball):
 
 def timeToStop(start):
     return(time.time() - start > 1)
-
-    
-

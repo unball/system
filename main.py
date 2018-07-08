@@ -16,7 +16,7 @@ import time
 
 number_of_robots = 3
 robot = [Robot(), Robot(), Robot()]
-k_p = [[3,3],[3,4],[3,4]]
+k_p = [[3,2],[3,2],[3,2]]
 k_i = [[0,0],[0,0],[0,0]]
 k_d = [[0.1,0],[0,0],[0,0]]
 speeds = robots_speeds_msg()
