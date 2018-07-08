@@ -12,38 +12,38 @@ integral_angle = [0,0,0]
 magnitude_anterior = 0
 
 def position_control(robot):
-	global i_error_distance
+    global i_error_distance
 
-	relative_target = convertTargetPositions(robot)
+    relative_target = convertTargetPositions(robot)
 
-	if relative_target[1] > 0:
-		orientation = 1
-	else:
-		orientation = -1
+    if relative_target[1] > 0:
+        orientation = 1
+    else:
+        orientation = -1
 
-	error_angle = calculateErrorAngle(relative_target,orientation)
-	error_magnitude = calculateDistance(relative_target)
+    error_angle = calculateErrorAngle(relative_target,orientation)
+    error_magnitude = calculateDistance(relative_target)
 
-	if len(i_error_distance[robot.id]) > 10000:
-		del i_error_distance[robot.id][0]
-		del i_error_angle[robot.id][0]
+    if len(i_error_distance[robot.id]) > 10000:
+        del i_error_distance[robot.id][0]
+        del i_error_angle[robot.id][0]
 
-	i_error_distance[robot.id].append(error_magnitude)
-	i_error_angle[robot.id].append(error_angle)
-	integral_distance[robot.id] = sum(i_error_distance[robot.id])
-	integral_angle[robot.id] = sum(i_error_distance[robot.id])
+    i_error_distance[robot.id].append(error_magnitude)
+    i_error_angle[robot.id].append(error_angle)
+    integral_distance[robot.id] = sum(i_error_distance[robot.id])
+    integral_angle[robot.id] = sum(i_error_distance[robot.id])
 
-	if error_magnitude > 0.15:
-		u = orientation*0.6*cos(error_angle)
-	else:
-		u = (robot.kp_u * error_magnitude+ robot.ki_u*integral_distance[robot.id])*orientation*cos(error_angle)
+    if error_magnitude > 0.15:
+        u = orientation*0.6*cos(error_angle)
+    else:
+        u = (robot.kp_u * error_magnitude+ robot.ki_u*integral_distance[robot.id])*orientation*cos(error_angle)
 
-	if error_magnitude < 0.07:
-		u = 0
-		w = 0
+    if error_magnitude < 0.07:
+        u = 0
+        w = 0
 
 
 
-	w = robot.kp_w * error_angle + robot.ki_w*integral_angle[robot.id]
+    w = robot.kp_w * error_angle + robot.ki_w*integral_angle[robot.id]
 
-	return u, w
+    return u, w
