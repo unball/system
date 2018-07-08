@@ -9,6 +9,7 @@ from test import *
 from updated_gtb import *
 from defender import *
 from defender_2 import *
+from new_attack import *
 
 def start(robot, ball):
 	if robot.strategy == "kicker":
@@ -25,9 +26,9 @@ def start(robot, ball):
 		control, x, y, th = defender2(robot,ball)
 	elif robot.strategy == 'defender':
 		control, x, y, th = defender(robot,ball)
+	elif robot.strategy == 'new_attack':
+		control,x,y,th = new_attack(robot,ball)
 	else:
 		control,x,y,th = go_to_ball(robot,ball)
-
-
 
 	return control,x,y,th
