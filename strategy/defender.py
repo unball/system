@@ -19,16 +19,16 @@ def defender(robot,ball):
     else:
         control = control_options.position
 
-    if ball.side == 1:
-        if x < -ball.side*0.55:
-            x = -ball.side*0.55
-        elif x > ball.side*0.05:
-            x = ball.side*0.05
-    else:
-        if x > -ball.side*0.55:
-            x = -ball.side*0.55
-        elif x < ball.side*0.05:
-            x = ball.side*0.05
+	if ball.side == 1:
+		if x < -ball.side*0.45:
+			x = -ball.side*0.45
+		elif x > ball.side*0.45:
+			x = ball.side*0.45
+	else:
+		if x > -ball.side*0.45:
+			x = -ball.side*0.45
+		elif x < ball.side*0.45:
+			x = ball.side*0.45
 
     return control, x, y, th
 
@@ -48,6 +48,3 @@ def lookingAtWrongGoal(robot,ball):
 
 def timeToStop(start):
     return(time.time() - start > 1)
-
-    
-

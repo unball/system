@@ -4,12 +4,12 @@ import planar
 from math import sqrt, fabs
 old_coordinates = []
 def goalkeeper(robot,ball):
-    x = -ball.side*0.65
-    y_limit = 0.25
-    distance2ball = sqrt((robot.x-ball.x)**2 + (robot.y - ball.y)**2)
-    distance2goal = sqrt((robot.x - robot.dx)**2 + (robot.y - robot.dy)**2)
-    old_coordinates.append(ball.x)
-    old_coordinates.append(ball.y)
+	x = -ball.side*0.65
+	y_limit = 0.325
+	distance2ball = sqrt((robot.x-ball.x)**2 + (robot.y - ball.y)**2)
+	distance2goal = sqrt((robot.x - robot.dx)**2 + (robot.y - robot.dy)**2)
+	old_coordinates.append(ball.x)
+	old_coordinates.append(ball.y)
 
     try:
         vel_x = ball.x - old_coordinates[0]
@@ -35,8 +35,20 @@ def goalkeeper(robot,ball):
         else:
             y = ball.y
 
-    if len(old_coordinates) >= 4:
-        del old_coordinates[0:2]
+	if fabs(vel_y) > 0.00001 or fabs(vel_x) > 0.00001:
+		if (walls_y > y_limit):
+			y = y_limit
+		elif (walls_y < -y_limit):
+			y = -y_limit
+		else:
+			y = walls_y
+	else:
+		if (ball.y > y_limit):
+			y = y_limit
+		elif (ball.y < -y_limit):
+			y = -y_limit
+		else:
+			y = ball.y
 
     control = control_options.poseLine
 
