@@ -94,8 +94,6 @@ def main():
         while not rospy.is_shutdown():
             if paused:
                 for i in range(3):
-                    speeds.linear_vel[i] = 0
-                    speeds.angular_vel[i] = 0
                     motors.MotorA[i] = 0
                     motors.MotorB[i] = 0
 
