@@ -18,12 +18,9 @@ def pose_line_control(robot):
     u = robot.kp_u*error_magnitude*orientation
     w = robot.kp_w*error_angle
 
-    if error_magnitude > tolerance_radius:
-        if fabs(error_angle) < pi/12:
-            w = 0
-    else:
-        k_angular=2
+    if error_magnitude < tolerance_radius:
+        k_angular=.5
         u = 0
-        w = k_angular*angdiff(robot.th, robot.dth)
+        w = k_angular*angdiff(robot.th, pi/2)
 
     return u, w

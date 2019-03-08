@@ -58,6 +58,8 @@ def goalkeeper(robot,ball):
         else:
             control = control_options.spinCW
 
+    
+
     th = m.pi/2
     return control, x, y, th
 

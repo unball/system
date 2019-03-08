@@ -16,12 +16,12 @@ import time
 
 number_of_robots = 3
 robot = [Robot(), Robot(), Robot()]
-k_p = [[3,2],[3,2],[3,2]]
+k_p = [[1,2],[1,2],[0.5,0.5]]
 k_i = [[0,0],[0,0],[0,0]]
-k_d = [[0.1,0],[0,0],[0,0]]
+k_d = [[0,0],[0,0],[0,0]]
 speeds = robots_speeds_msg()
 motors = comm_msg()
-strategies = ["goalkeeper","kicker","new_attack"]
+strategies = ["goalkeeper","goalkeeper","new_attack"]
 joystick = [False, False, False]
 paused = False
 ball = Ball()
